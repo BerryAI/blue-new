@@ -4,6 +4,7 @@ machine:
     PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
 
     CLOUDSDK_PYTHON_SITEPACKAGES: 1
+    CLOUDSDK_CORE_DISABLE_PROMPTS: 1
 
     CLOUDSDK_INSTALL_DIR: /tmp
 
@@ -15,7 +16,6 @@ dependencies:
     - unzip -q -d $HOME $HOME/google_appengine_1.9.40.zip
     # Retrieve our secrets from the CircleCI environment
     - echo $CLIENT_SECRET | base64 --decode > ${HOME}/client-secret.json
-    # - sed  s/YOUR-API-KEY/$API_KEY/ api_key.py.sample > api_key.py
     # vendor our dependencies
     # - mkdir -p lib
     # - pip install -r requirements.txt -t lib
@@ -35,7 +35,7 @@ dependencies:
     - sudo apt-get update
     - sudo apt-get install python-openssl python3-openssl
     - sudo rm -rf /opt/google-cloud-sdk/
-    - curl https://sdk.cloud.google.com | bash
+    - curl https://sdk.cloud.google.com | bash --quiet
     - source ~/.bashrc
 
   post:
