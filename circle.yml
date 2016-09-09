@@ -22,8 +22,9 @@ dependencies:
     - pip install --upgrade pip setuptools pyopenssl
     # Make sure gcloud is up to date
     # - gcloud --quiet components update
-    - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
-    - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
+    - gcloud --quiet components update --version 119.0.0
+    # - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+    # - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
     # authenticate gcloud
     - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json berry-blue@appspot.gserviceaccount.com
     # Replace <your-project-id>
