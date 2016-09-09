@@ -19,7 +19,7 @@ dependencies:
     # - mkdir -p lib
     # - pip install -r requirements.txt -t lib
 
-    - pip install --upgrade pip setuptools
+    - pip install --upgrade pip setuptools pyopenssl
     # Make sure gcloud is up to date
     # - gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
