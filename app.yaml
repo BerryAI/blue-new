@@ -1,5 +1,5 @@
 # only use these two lines with gae devserver
-# application: berry-ai
+# application: berry-blue
 # version: 1
 runtime: python27
 api_version: 1
@@ -7,9 +7,6 @@ threadsafe: yes
 
 
 handlers:
-- url: /berry\.png
-  static_files: berry.png
-  upload: berry\.png
 
 - url: /(.+)
   static_files: public/\1
