@@ -25,7 +25,7 @@ dependencies:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
     # authenticate gcloud
-    - gcloud auth activate-service-account berry-blue@appspot.gserviceaccount.com --key-file ${HOME}/client-secret.json
+    - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json berry-blue@appspot.gserviceaccount.com
     # Replace <your-project-id>
     - gcloud config set project berry-blue
 
