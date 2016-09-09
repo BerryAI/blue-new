@@ -5,8 +5,7 @@ machine:
 
     CLOUDSDK_PYTHON_SITEPACKAGES: 1
 
-    # Replace this with your project ID
-    GCLOUD_PROJECT: "berry-blue"
+    CLOUDSDK_INSTALL_DIR: /tmp
 
 dependencies:
   pre:
@@ -21,15 +20,30 @@ dependencies:
     # - mkdir -p lib
     # - pip install -r requirements.txt -t lib
 
-    - pip install --upgrade pip setuptools pyopenssl
+    - pip install --upgrade pip setuptools
     # Make sure gcloud is up to date
     # - gcloud --quiet components update      # ERROR: (gcloud.components.update) Permission denied: [/opt/google-cloud-sdk.staging]
-    - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
-    - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
-    # authenticate gcloud
-    - gcloud auth activate-service-account --key-file ${HOME}/client-secret.json berry-blue@appspot.gserviceaccount.com
-    # Replace <your-project-id>
-    - gcloud config set project berry-blue
+    # - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
+    # - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
+
+
+    # For some reasons, there is an issue with the pre-installed gcloud that
+    # PyOpenSSL is not available when trying to activate the service account.
+    # Re-installing the gcloud worked as a workaround.
+    # See https://discuss.circleci.com/t/deployment-to-appengine-fails-pyopenssl-not-available/2154
+    - sudo apt-get remove python-virtualenv python-openssl python3-openssl
+    - sudo apt-get update
+    - sudo apt-get install python-openssl python3-openssl
+    - sudo rm -rf /opt/google-cloud-sdk/
+    - curl https://sdk.cloud.google.com | bash
+    - source ~/.bashrc
+
+  post:
+      # - echo ${GCLOUD_SERVICE_KEY} | base64 --decode > ${HOME}/client-secret.json
+      - /tmp/google-cloud-sdk/bin/gcloud config set project ${GCLOUD_PROJECT}
+      - /tmp/google-cloud-sdk/bin/gcloud --quiet components update
+      - /tmp/google-cloud-sdk/bin/gcloud --quiet components install beta
+      - /tmp/google-cloud-sdk/bin/gcloud auth activate-service-account ${GCLOUD_SERVICE_ACCOUNT} --key-file ${HOME}/client-secret.json
 
 test:
   override:
