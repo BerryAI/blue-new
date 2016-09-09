@@ -3,6 +3,8 @@ machine:
     # Add app engine sdk to pythonpath for local unit tests.
     PYTHONPATH: ${PYTHONPATH}:${HOME}/google_appengine
 
+    CLOUDSDK_PYTHON_SITEPACKAGES: 1
+
     # Replace this with your project ID
     GCLOUD_PROJECT: "berry-blue"
 
@@ -21,8 +23,8 @@ dependencies:
 
     - pip install --upgrade pip setuptools pyopenssl
     # Make sure gcloud is up to date
-    # - gcloud --quiet components update
-    - gcloud --quiet components update --version 119.0.0
+    - gcloud --quiet components update
+    # - gcloud --quiet components update --version 119.0.0
     # - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     # - sudo chmod 757 /home/ubuntu/.config/gcloud/logs -R
     # authenticate gcloud
